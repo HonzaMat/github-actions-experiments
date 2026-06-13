@@ -15,6 +15,10 @@ jobs:
         run: |
           git clone https://github.com/riscv-software-src/riscv-isa-sim.git
 
+      - name: Install build-time dependencies
+        run: |
+          dnf install dtc
+
       - name: Build spike
         run: |
           cd riscv-isa-sim
