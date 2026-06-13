@@ -6,6 +6,7 @@ on:
 jobs:
   build_doc:
     runs-on: ubuntu-22.04
+    container: quay.io/pypa/manylinux_2_28_x86_64
     steps:
       - name: Check out the repository code
         uses: actions/checkout@v6
