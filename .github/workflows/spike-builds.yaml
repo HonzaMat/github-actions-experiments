@@ -14,3 +14,16 @@ jobs:
       - name: Clone spike source
         run: |
           git clone https://github.com/riscv-software-src/riscv-isa-sim.git
+
+      - name: Build spike
+        run: |
+          cd riscv-isa-sim
+          mkdir build && cd build
+          ../configure --prefix=/opt/riscv
+          make -j`nproc`
+          make install
+
+      - name: Post-build check
+        run: |
+          ls -lR /opt/riscv
+          ldd /opt/riscv/bin/*
