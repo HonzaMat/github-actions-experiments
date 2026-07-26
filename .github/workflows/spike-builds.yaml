@@ -72,7 +72,7 @@ jobs:
           tar -xzvf riscv-isa-sim.tar.gz -C /opt
 
       - name: Install runtime dependencies
-        run: bash spike_smoketest/install_deps.sh
+        run: bash spike_smoketest/install_deps.sh ${{ matrix.container }}
 
       - name: Run smoke test
         run: |
