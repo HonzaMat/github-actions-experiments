@@ -57,6 +57,7 @@ jobs:
           - fedora:44
           - rockylinux:8
           - rockylinux:9
+          - almalinux:10
     steps:
       - name: Check out the repository code
         uses: actions/checkout@v6

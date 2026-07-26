@@ -19,11 +19,11 @@ case "$1" in
         apt-get update
         apt-get install -y device-tree-compiler
         ;;
-    "fedora:44"|"rockylinux:9")
-        dnf install -y diff dtc
+    "fedora:44"|"rockylinux:9"|"almalinux:10")
+        dnf install -y diffutils dtc
         ;;
     "rockylinux:8")
-        dnf install -y diff
+        dnf install -y diffutils
         dnf install --enablerepo=devel -y dtc
         ;;
     *)
