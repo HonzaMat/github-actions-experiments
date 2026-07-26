@@ -1,5 +1,8 @@
 name: Build RISC-V ISA simulator (Spike)
 on:
+  push:
+    branches:
+      - 'main'
   pull_request:
   schedule:
     - cron: '18 03 * * *'
@@ -8,6 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     container: quay.io/pypa/manylinux_2_28_x86_64
+    timeout-minutes: 30
     steps:
       - name: Check out the repository code
         uses: actions/checkout@v6
@@ -46,6 +50,7 @@ jobs:
     needs: build
     runs-on: ubuntu-24.04
     container: ${{ matrix.container }}
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
@@ -92,7 +97,7 @@ jobs:
     needs: [build, test]
     runs-on: ubuntu-24.04
     if: github.event_name == 'schedule'
-
+    timeout-minutes: 5
     outputs:
       proceed: ${{ steps.decide.outputs.proceed }}
     steps:
@@ -110,6 +115,7 @@ jobs:
     needs: [build, test, decide_if_release]
     runs-on: ubuntu-24.04
     if: "${{ needs.decide_if_release.outputs.proceed == 'true' }}"
+    timeout-minutes: 5
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v8
