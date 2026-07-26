@@ -1,0 +1,5 @@
+
+spike_smoketest/test_program/spike_out
+spike_smoketest/test_program/toolchain
+spike_smoketest/test_program/elf/*.o
+
