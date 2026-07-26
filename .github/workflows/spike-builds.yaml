@@ -25,7 +25,7 @@ jobs:
           mkdir build && cd build
           ../configure --prefix=/opt/riscv-isa-sim
           make -j`nproc`
-          make install-strip
+          make install
           /opt/riscv-isa-sim/bin/spike --help
 
       - name: Package build output
