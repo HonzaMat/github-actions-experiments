@@ -46,6 +46,8 @@ jobs:
     runs-on: ubuntu-24.04
     container: quay.io/pypa/manylinux_2_28_x86_64
     steps:
+      - name: Check out the repository code
+        uses: actions/checkout@v6
 
       - name: Download build artifact
         uses: actions/download-artifact@v8
