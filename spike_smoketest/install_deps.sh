@@ -29,6 +29,7 @@ case "$1" in
     *)
         echo "Don't know what dependencies to install on this system." >&2
         exit 2
+        ;;
 esac
 
 exit 0
