@@ -1,4 +1,4 @@
 
-spike_smoketest/toolchain/*
-spike_smoketest/elf/*.o
+spike_smoketest/test_program/toolchain
+spike_smoketest/test_program/elf/*.o
 
