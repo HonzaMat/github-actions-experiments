@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '42 20 * * 2,4,6'
 jobs:
-  build_doc:
+  build_spike:
     runs-on: ubuntu-22.04
     container: quay.io/pypa/manylinux_2_28_x86_64
     steps:
@@ -23,11 +23,20 @@ jobs:
         run: |
           cd riscv-isa-sim
           mkdir build && cd build
-          ../configure --prefix=/opt/riscv
+          ../configure --prefix=/opt/riscv-isa-sim
           make -j`nproc`
           make install
+          /opt/riscv-isa-sim/bin/spike --help
 
-      - name: Post-build check
+      - name: Package build output
         run: |
-          ls -lR /opt/riscv
-          ldd /opt/riscv/bin/*
+          tar -czvf riscv-isa-sim.tar.gz -C /opt riscv-isa-sim
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spike-build
+          path: riscv-isa-sim.tar.gz
+          retention-days: 7
+
+
