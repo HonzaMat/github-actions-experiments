@@ -40,6 +40,7 @@ jobs:
           retention-days: 7
 
   test:
+    needs: build
     runs-on: ubuntu-24.04
     container: quay.io/pypa/manylinux_2_28_x86_64
     steps:
