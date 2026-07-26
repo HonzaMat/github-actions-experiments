@@ -59,6 +59,14 @@ jobs:
           mkdir -p /opt
           tar -xzvf riscv-isa-sim.tar.gz -C /opt
 
-      - name: Run smoke-test
+      - name: Run smoke test
         run: |
           bash spike_smoketest/run_smoketest.sh /opt/riscv-isa-sim/bin/spike
+
+      - name: Store test logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-log
+          path: spike_smoketest/spike_out/**
+          retention-days: 7
