@@ -15,7 +15,7 @@ CFLAGS = \
 	-mabi=ilp32 \
 	-std=c99 \
 	-Wall -Werror \
-	-g
+	-g3
 
 LDFLAGS = \
     -nostartfiles \
