@@ -1,8 +1,9 @@
 name: Build RISC-V ISA simulator (Spike)
 on:
-  push:
+  pull_request:
   schedule:
-    - cron: '42 20 * * 2,4,6'
+    - cron: '18 03 * * *'
+
 jobs:
   build:
     runs-on: ubuntu-24.04
@@ -39,7 +40,7 @@ jobs:
         with:
           name: spike-build
           path: riscv-isa-sim.tar.gz
-          retention-days: 7
+          retention-days: 5
 
   test:
     needs: build
@@ -85,4 +86,43 @@ jobs:
         with:
           name: test-log
           path: spike_smoketest/spike_out/**
-          retention-days: 7
+          retention-days: 5
+
+  decide_if_release:
+    needs: [build, test]
+    runs-on: ubuntu-24.04
+    if: github.event_name == 'schedule'
+
+    outputs:
+      proceed: ${{ steps.decide.outputs.proceed }}
+    steps:
+      - name: Decide if to make a release
+        id: decide
+        run: |
+          # Only release from scheduled jobs on Saturday
+          if [ "$(date +%u)" -eq 6 ]; then
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  release:
+    needs: [build, test, decide_if_release]
+    runs-on: ubuntu-24.04
+    if: "${{ needs.decide_if_release.outputs.proceed == 'true' }}"
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: spike-build
+          path: dist
+      - name: Prepare release title
+        id: title
+        run: echo "value=Spike build $(date -u +%G-w%V)" >> "$GITHUB_OUTPUT"
+      - name: Create release and attach the assets
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ steps.title.outputs.value }}
+          files: dist/riscv-isa-sim.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
