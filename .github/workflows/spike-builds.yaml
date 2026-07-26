@@ -50,21 +50,21 @@ jobs:
       matrix:
         include:
           - container: ubuntu:jammy
-            deps_cmd: "apt-get update && apt-install device-tree-compiler"
+            deps_cmd: "apt-get update && apt-get install -y device-tree-compiler"
           - container: ubuntu:noble
-            deps_cmd: "apt-get update && apt-install device-tree-compiler"
+            deps_cmd: "apt-get update && apt-get install -y device-tree-compiler"
           - container: ubuntu:resolute
-            deps_cmd: "apt-get update && apt-install device-tree-compiler"
+            deps_cmd: "apt-get update && apt-get install -y device-tree-compiler"
           - container: debian:12
-            deps_cmd: "apt-get update && apt-install device-tree-compiler"
+            deps_cmd: "apt-get update && apt-get install -y device-tree-compiler"
           - container: debian:13
-            deps_cmd: "apt-get update && apt-install device-tree-compiler"
+            deps_cmd: "apt-get update && apt-get install -y device-tree-compiler"
           - container: fedora:44
-            deps_cmd: "dnf install dtc"
+            deps_cmd: "dnf install -y dtc"
           - container: rockylinux:8
-            deps_cmd: "dnf install dtc"
+            deps_cmd: "dnf install -y dtc"
           - container: rockylinux:9
-            deps_cmd: "dnf install dtc"
+            deps_cmd: "dnf install -y dtc"
     steps:
       - name: Check out the repository code
         uses: actions/checkout@v6
