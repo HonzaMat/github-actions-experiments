@@ -5,7 +5,7 @@ on:
       - 'main'
   pull_request:
   schedule:
-    - cron: '32 22 * * *'
+    - cron: '24 * * * *'
 
 jobs:
   build:
@@ -104,10 +104,12 @@ jobs:
       - name: Decide if to make a release
         id: decide
         run: |
-          # Only release from scheduled jobs on Sunday
-          if [ "$(date +%u)" -eq 7 ]; then
+          # Only release from scheduled jobs on Tuesday
+          if [ "$(date +%u)" -eq 2 ]; then
+            echo "Will not upload a release (proceed=false)"
             echo "proceed=false" >> "$GITHUB_OUTPUT"
           else
+            echo "Will upload a release (proceed=true)"
             echo "proceed=true" >> "$GITHUB_OUTPUT"
           fi
 
