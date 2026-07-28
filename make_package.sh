@@ -6,6 +6,8 @@
 
 set -euox pipefail
 
+mkdir -p /opt/riscv-isa-sim
+
 # Store the build log
 cp build_log.txt /opt/riscv-isa-sim
 

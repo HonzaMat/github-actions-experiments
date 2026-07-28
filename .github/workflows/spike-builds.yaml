@@ -16,10 +16,6 @@ jobs:
       - name: Check out the repository code
         uses: actions/checkout@v6
 
-      - name: Clone spike source
-        run: |
-          git clone https://github.com/riscv-software-src/riscv-isa-sim.git
-
       - name: Install build-time dependencies
         run: |
           dnf install -y dtc
