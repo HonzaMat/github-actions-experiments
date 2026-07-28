@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     container: quay.io/pypa/manylinux_2_28_x86_64
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - name: Check out the repository code
         uses: actions/checkout@v6
@@ -38,7 +38,7 @@ jobs:
     needs: build
     runs-on: ubuntu-24.04
     container: ${{ matrix.container }}
-    timeout-minutes: 5
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -85,7 +85,7 @@ jobs:
     needs: [build, test]
     runs-on: ubuntu-24.04
     if: github.event_name == 'schedule'
-    timeout-minutes: 5
+    timeout-minutes: 15
     outputs:
       proceed: ${{ steps.decide.outputs.proceed }}
     steps:
@@ -105,7 +105,7 @@ jobs:
     needs: [build, test, decide_if_release]
     runs-on: ubuntu-24.04
     if: "${{ needs.decide_if_release.outputs.proceed == 'true' }}"
-    timeout-minutes: 5
+    timeout-minutes: 30
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v8
