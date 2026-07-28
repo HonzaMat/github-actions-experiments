@@ -26,18 +26,10 @@ jobs:
 
       - name: Build spike
         run: |
-          cd riscv-isa-sim
-          mkdir build && cd build
-          ../configure --prefix=/opt/riscv-isa-sim
-          make -j`nproc`
-          make install
-          find /opt/riscv-isa-sim/bin -type f -executable | xargs strip --strip-unneeded
-          find /opt/riscv-isa-sim/lib -name "*.so" | xargs strip --strip-unneeded
-          /opt/riscv-isa-sim/bin/spike --help
-
+          bash checkout_and_build_spike.sh 2>&1 | tee build_log.txt
       - name: Package build output
         run: |
-          tar -czvf riscv-isa-sim.tar.gz -C /opt riscv-isa-sim
+          bash make_package.sh
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v7
