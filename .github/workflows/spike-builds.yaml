@@ -120,5 +120,6 @@ jobs:
         with:
           name: ${{ steps.title.outputs.value }}
           files: dist/riscv-isa-sim.tar.gz
+          tag_name: dummy_tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
