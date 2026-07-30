@@ -4,8 +4,8 @@ on:
     branches:
       - 'main'
   pull_request:
-  schedule:
-    - cron: '24 * * * *'
+  #schedule:
+  #  - cron: '24 * * * *'
 
 jobs:
   build:
